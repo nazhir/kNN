@@ -1,4 +1,4 @@
-package readFromFile;
+package knnImplementation;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -122,7 +122,7 @@ public class read {
 					/*if(i.next().equals("real"))
 						columns.add(c);*/
 					String[] s = i.next().toString().split(" ");
-					if(s[s.length-1].equals("numeric"))
+					if(s[s.length-1].equals("numeric"))  //equals("real");
 					{
 						columns.add(c);
 					}
@@ -134,7 +134,7 @@ public class read {
 				//new array list for storing the normalised instances from test data
 				List<Instance> test_normalised_instances=new ArrayList<Instance>();
 				test_normalised_instances.addAll(test_instance);
-				System.out.println(test_normalised_instances.get(0));
+				//System.out.println(test_normalised_instances.get(0));
 				
 				//new array list for storing the normalised isntances for train data
 				List<Instance> train_normalised_instances=new ArrayList<Instance>();
