@@ -8,7 +8,7 @@ import weka.core.Instance;
 public class NormalizeData {
 	//public static double min=0;
 	//public static double max=0;
-	public void normaliseHelper(double min, double max, Integer col, List<Instance> normInstances) {
+	public void normaliseHelper(double min, double max, int col, List<Instance> normInstances) {
 		double denominator=max-min;
 		double val;
 		for(int i=0;i<normInstances.size();i++) {
@@ -18,9 +18,9 @@ public class NormalizeData {
 		
 	}
 	
-	public List<Instance> normalization (double[] minList, double[] maxList, ArrayList<Instance> instanceList, List<Integer> columns) {
-		List<Instance> normInstances=new ArrayList<Instance>();
-		normInstances.addAll(instanceList);
+	public ArrayList<Instance> normalization (double[] minList, double[] maxList, ArrayList<Instance> instanceList, List<Integer> columns) {
+		ArrayList<Instance> normInstances=new ArrayList<Instance>();
+		normInstances.addAll(instanceList); //??????
 		//int min=0;
 		//int max=0;
 		
@@ -33,17 +33,20 @@ public class NormalizeData {
 
 	public double[] findMin(ArrayList<Instance> trainInstances, ArrayList<Instance> testInstances, List<Integer> columns) {
 		double[] minList=new double[columns.size()];
-		double min=0;
+		double min;
 		
 		for(int i=0;i<columns.size();i++) { //For each column fins the min value.
-		    for(int j=0;j<trainInstances.size();j++) {  //iterate all rows and find the min.
+			min=trainInstances.get(0).value(columns.get(i));
+		    for(int j=1;j<trainInstances.size();j++) {  //iterate all rows and find the min.
 			    double temp = trainInstances.get(j).value(columns.get(i));
 			    min=Math.min(min,temp);
 		    }
+		    
 		    for(int z=0;z<testInstances.size();z++) {  //iterate all rows and find the min.
 			    double temp = testInstances.get(z).value(columns.get(i));
 			    min=Math.min(min,temp);
 		    }
+		  //System.out.println(min);
 		   minList[i]=min; //Record this min into list.
 		}
 		
@@ -52,17 +55,20 @@ public class NormalizeData {
 	
 	public double[] findMax(ArrayList<Instance> trainInstances, ArrayList<Instance> testInstances, List<Integer> columns) {
 		double[] maxList=new double[columns.size()];
-		double max=0;
+		double max;
 		
 		for(int i=0;i<columns.size();i++) { //For each column fins the max value.
-		    for(int j=0;j<trainInstances.size();j++) {  //iterate all rows and find the max.
+			max=trainInstances.get(0).value(columns.get(i));
+		    for(int j=1;j<trainInstances.size();j++) {  //iterate all rows and find the max.
 			    double temp = trainInstances.get(j).value(columns.get(i));
-			    max=Math.min(max,temp);
+			    max=Math.max(max,temp);
 		    }
+		   
 		    for(int j=0;j<testInstances.size();j++) {  //iterate all rows and find the max.
 			    double temp = testInstances.get(j).value(columns.get(i));
-			    max=Math.min(max,temp);
+			    max=Math.max(max,temp);
 		    }
+		    //System.out.println(max);
 		   maxList[i]=max; //Record this min into list.
 		}
 		

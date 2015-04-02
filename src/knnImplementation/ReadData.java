@@ -14,8 +14,8 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 public class ReadData {
-    public List<ArrayList> read(String file) {
-    	List<ArrayList> list=new ArrayList<ArrayList>();
+    public ArrayList<ArrayList> read(String file) {
+    	ArrayList<ArrayList> list=new ArrayList<ArrayList>();
     	ArrayList<Instance> instanceList=new ArrayList<Instance>();
     	ArrayList<Attribute> attributes=new ArrayList<Attribute>();    //import the 6 attributes
     	BufferedReader reader = null;
