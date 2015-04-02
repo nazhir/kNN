@@ -1,8 +1,10 @@
 package knnImplementation;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -38,7 +40,38 @@ public class Classify {
 		return map;
 		
 	}
-	public void sorting(HashMap<Integer,Double>) {
+	public LinkedHashMap<Integer,Double> sorting(HashMap<Integer,Double> passedMap) {
+		   ArrayList mapKeys = new ArrayList(passedMap.keySet());
+		   ArrayList mapValues = new ArrayList(passedMap.values());
+		   Collections.sort(mapValues);
+		   Collections.sort(mapKeys);
+
+		   LinkedHashMap<Integer,Double> sortedMap = new LinkedHashMap<Integer,Double>();
+
+		   Iterator<Double> valueIt = mapValues.iterator();
+		   while (valueIt.hasNext()) {
+		       Object val = valueIt.next();
+		       Iterator<Integer> keyIt = mapKeys.iterator();
+
+		       while (keyIt.hasNext()) {
+		           Object key = keyIt.next();
+		           double comp1 = passedMap.get(key);
+		           double comp2 =(double) val;
+
+		           if (comp1==comp2){
+		               passedMap.remove(key);
+		               mapKeys.remove(key);
+		               sortedMap.put((Integer)key, (Double)val);
+		               break;
+		           }
+
+		       }
+
+		   }
+		   return sortedMap;
+		}
+	
+	public void setLabel(HashMap<Integer,Double> passedMap, ArrayList<Instance> trainInstances, ArrayList<Instance> testInstances) {
 		
 	}
 	

@@ -170,14 +170,14 @@ public class Read {
 							if(temp>max)
 								max=temp;
 						}
-						
+						System.out.println(min+" "+max);
 						normalise_testdata(min,max,test_instance.get(i1),columns.get(z),test_normalised_instances,i1);
 						normalise_traindata(min,max,columns.get(z),train_normalised_instances);
 						
 						
 					}
-					for(Instance d:train_normalised_instances)
-						System.out.println(d);
+					//for(Instance d:train_normalised_instances)
+					//	System.out.println(d);
 					
 					// you need to reset the normalised_instances to the previous state 
 					

@@ -41,12 +41,17 @@ public class KNN {
 			norm.normalization(minList, maxList, testInstances, columns);
 		}
 		//for(Instance inst:trainInstances ) System.out.println(inst);
-		/* Calculate the distance */
+		/* Calculate the distance and sorting*/
 		Classify classify=new Classify();
+		HashMap<Integer,Double> map;
 		for(Instance test: testInstances) {
-			HashMap<Integer,Double> map=classify.distanceList(test, trainInstances, columns);
-			
+			map=classify.distanceList(test, trainInstances, columns);
+			map=classify.sorting(map);
+			/* Find the top 3 */
+			System.out.println();
 		}
+		
+		
 		
 	}
 }
