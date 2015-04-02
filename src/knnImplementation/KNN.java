@@ -1,6 +1,7 @@
 package knnImplementation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import weka.core.Attribute;
@@ -33,12 +34,19 @@ public class KNN {
 		NormalizeData norm= new NormalizeData();
 		double[] minList=norm.findMin(trainInstances,testInstances, columns);
 		double[] maxList=norm.findMax(trainInstances, testInstances, columns);
+		
 		/* Normalize the data */
 		for (int i=0;i<columns.size();i++) {
 			norm.normalization(minList, maxList, trainInstances, columns);
 			norm.normalization(minList, maxList, testInstances, columns);
 		}
-		for(Instance inst:trainInstances ) System.out.println(inst);
+		//for(Instance inst:trainInstances ) System.out.println(inst);
+		/* Calculate the distance */
+		Classify classify=new Classify();
+		for(Instance test: testInstances) {
+			HashMap<Integer,Double> map=classify.distanceList(test, trainInstances, columns);
+			
+		}
 		
 	}
 }

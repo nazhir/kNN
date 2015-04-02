@@ -7,7 +7,7 @@ import java.util.HashMap;
 import weka.core.Attribute;
 import weka.core.Instance;
 
-public class CalDistance {
+public class Classify {
 /*
  * 1. Read data from file
  * 2. Get normalized columns
@@ -16,7 +16,7 @@ public class CalDistance {
  * 5. Calculate the distance
  */
 	
-	public ArrayList<Double> distanceList (Instance testData, ArrayList<Instance> trainInstances, ArrayList<Integer> columns) {
+	public HashMap<Integer,Double> distanceList (Instance testData, ArrayList<Instance> trainInstances, ArrayList<Integer> columns) {
 		
 		HashMap<Integer,Double> map=new HashMap <Integer, Double>();
 		double distance=0;
@@ -34,12 +34,11 @@ public class CalDistance {
 				map.put(i,distance);
 			}
 		//}
+	
+		return map;
 		
-		
-		
-		
-		
-		return null;
+	}
+	public void sorting(HashMap<Integer,Double>) {
 		
 	}
 	
