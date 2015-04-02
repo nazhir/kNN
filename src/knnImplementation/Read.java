@@ -13,9 +13,9 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class read {
+public class Read {
 
-	public read(){}
+	public Read(){}
 	public static void main(String args[]){
 		
 		
@@ -122,11 +122,13 @@ public class read {
 					/*if(i.next().equals("real"))
 						columns.add(c);*/
 					String[] s = i.next().toString().split(" ");
-					if(s[s.length-1].equals("numeric"))  //equals("real");
+					if(s[s.length-1].equals("numeric")) 
 					{
 						columns.add(c);
+						//System.out.println(c);
 					}
 					c++;
+					
 				}
 				
 				

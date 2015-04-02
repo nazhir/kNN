@@ -13,7 +13,7 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class readData {
+public class ReadData {
     public List<ArrayList> read(String file) {
     	List<ArrayList> list=new ArrayList<ArrayList>();
     	ArrayList<Instance> instanceList=new ArrayList<Instance>();
@@ -55,8 +55,8 @@ public class readData {
 		return list;
     }
     
-    public List<Integer> getNormColumns (List<Attribute> attributes) {
-		List<Integer> columns=new ArrayList<Integer>();
+    public ArrayList<Integer> getNormColumns (ArrayList<Attribute> attributes) {
+		ArrayList<Integer> columns=new ArrayList<Integer>();
 		Iterator<Attribute> i = attributes.iterator();
 		int c=0;
 		while(i.hasNext())
