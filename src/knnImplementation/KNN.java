@@ -2,6 +2,7 @@ package knnImplementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import weka.core.Attribute;
@@ -43,12 +44,13 @@ public class KNN {
 		//for(Instance inst:trainInstances ) System.out.println(inst);
 		/* Calculate the distance and sorting*/
 		Classify classify=new Classify();
-		HashMap<Integer,Double> map;
+		LinkedHashMap<Integer,Double> map;
 		for(Instance test: testInstances) {
 			map=classify.distanceList(test, trainInstances, columns);
 			map=classify.sorting(map);
-			/* Find the top 3 */
-			System.out.println();
+			/* Find the TOP3 and setLabel */
+			classify.setLabel(map, trainInstances, test);
+			System.out.println(test);
 		}
 		
 		

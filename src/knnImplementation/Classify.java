@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -18,9 +19,9 @@ public class Classify {
  * 5. Calculate the distance
  */
 	
-	public HashMap<Integer,Double> distanceList (Instance testData, ArrayList<Instance> trainInstances, ArrayList<Integer> columns) {
+	public LinkedHashMap<Integer,Double> distanceList (Instance testData, ArrayList<Instance> trainInstances, ArrayList<Integer> columns) {
 		
-		HashMap<Integer,Double> map=new HashMap <Integer, Double>();
+		LinkedHashMap<Integer,Double> map=new LinkedHashMap <Integer, Double>();
 		double distance=0;
 		int sim_type=0;
 		int sim_style=0;
@@ -40,7 +41,7 @@ public class Classify {
 		return map;
 		
 	}
-	public LinkedHashMap<Integer,Double> sorting(HashMap<Integer,Double> passedMap) {
+	public LinkedHashMap<Integer,Double> sorting(LinkedHashMap<Integer,Double> passedMap) {
 		   ArrayList mapKeys = new ArrayList(passedMap.keySet());
 		   ArrayList mapValues = new ArrayList(passedMap.values());
 		   Collections.sort(mapValues);
@@ -71,7 +72,47 @@ public class Classify {
 		   return sortedMap;
 		}
 	
-	public void setLabel(HashMap<Integer,Double> passedMap, ArrayList<Instance> trainInstances, ArrayList<Instance> testInstances) {
+	public void setLabel(LinkedHashMap<Integer,Double> sortedMap, ArrayList<Instance> trainInstances, Instance testData) {
+	    double dis3=0;
+		HashMap<Integer,Double> list=new LinkedHashMap<Integer,Double>();
+		int index=0;
+		/*Get the top3 distance*/
+		for(Map.Entry<Integer, Double> entry: sortedMap.entrySet()) { 
+			if(index==2) dis3=entry.getValue();
+			if(index>2) { //Judge whether the value(distance) is same with the 3rd one.
+				if(entry.getValue()!=dis3) break; 				
+			}
+			list.put(entry.getKey(),entry.getValue()); 
+			index++;
+		}
+		/* For each element in map list, find its label */
+		double[] labels=new double[5];
+		double max=0;
+		int indice=0;
+		for(Map.Entry<Integer, Double> entry: list.entrySet()) {
+			String label=trainInstances.get(entry.getKey()).stringValue(6);
+			switch(label) {
+			    case "C1": labels[0]+=entry.getValue(); break;
+			    case "C2": labels[1]+=entry.getValue(); break;
+			    case "C3": labels[2]+=entry.getValue(); break;
+			    case "C4": labels[3]+=entry.getValue(); break;
+			    case "C5": labels[4]+=entry.getValue(); break;
+			}
+			
+		}
+		/* Find maximum label*/
+		for (int i=1;i<5;i++) {
+			if(labels[i]>max) indice=i;
+		}
+		String label="";
+		switch(indice+1) {
+		    case 1: label="C1"; break;
+		    case 2: label="C2"; break;
+		    case 3: label="C3"; break;
+		    case 4: label="C4"; break;
+		    case 5: label="C5"; break;
+		}
+		testData.setValue(6, label);
 		
 	}
 	
