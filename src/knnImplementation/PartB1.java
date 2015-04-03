@@ -1,14 +1,13 @@
 package knnImplementation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import weka.core.Attribute;
 import weka.core.Instance;
 
-public class KNN {
+public class PartB1 {
 	public static void main (String[] args) {
 		List<ArrayList> trainList=new ArrayList<ArrayList>();
 		List<ArrayList> testList=new ArrayList<ArrayList>();
@@ -21,8 +20,8 @@ public class KNN {
     	
     	/*read data*/
 		ReadData getData=new ReadData();	
-		trainList=getData.read("trainProdSelection.arff");
-		testList=getData.read("testProdSelection.arff");
+		trainList=getData.read("trainProdIntro.binary.arff");
+		testList=getData.read("testProdIntro.binary.arff");
 		trainInstances=(ArrayList<Instance>)trainList.get(0);
 		testInstances=(ArrayList<Instance>)testList.get(0);
 		
@@ -30,7 +29,7 @@ public class KNN {
 		
 		/*Get columns   */
 		columns=getData.getNormColumns(attributes);
-		//System.out.println(trainInstances.get(0).toString());
+		//System.out.println(columns.size());
 		
 		/*Find the min and max value */
 		NormalizeData norm= new NormalizeData();
@@ -38,11 +37,20 @@ public class KNN {
 		double[] maxList=norm.findMax(trainInstances, testInstances, columns);
 		
 		/* Normalize the data */
-		for (int i=0;i<columns.size();i++) {
-			norm.normalization(minList, maxList, trainInstances, columns);
-			norm.normalization(minList, maxList, testInstances, columns);
+		trainInstances=norm.normalization(minList, maxList, trainInstances, columns);
+		testInstances=norm.normalization(minList, maxList, testInstances, columns);
+	    //for(Instance inst:trainInstances ) System.out.println(inst);
+	    
+	    /* Calculate the distance and sorting*/
+		ClassifyB1 classify=new ClassifyB1();
+		//Matrix matrix=new Matrix();
+		LinkedHashMap<Integer,Double> map;
+		for(Instance test: testInstances) {
+			map=classify.distanceList(test, trainInstances, columns);
+			map=classify.sorting(map);
+			/* Find the TOP3 and setLabel */
+			classify.setLabel(map, trainInstances, test);
+			System.out.println(test);
 		}
-		for(Instance inst:trainInstances ) System.out.println(inst);
-		
 	}
 }

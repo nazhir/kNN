@@ -1,4 +1,4 @@
-package prodIntro;
+package knnImplementation;
 
 public class Matrix {
 	

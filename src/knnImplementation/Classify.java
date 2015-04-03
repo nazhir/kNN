@@ -23,16 +23,19 @@ public class Classify {
 		
 		LinkedHashMap<Integer,Double> map=new LinkedHashMap <Integer, Double>();
 		double distance=0;
+		double[] weights={1,1,1,1,1,1};
 		int sim_type=0;
 		int sim_style=0;
 		//for(Instance test: testInstances) {//For each row of testData
 			for (int i=0; i<trainInstances.size();i++){ //For each row of trainData
-				for(int j: columns) { //For numeric attributes.
-					distance+=Math.pow(testData.value(j)-trainInstances.get(i).value(j), 2);
-				}
 				if(testData.stringValue(0).equals(trainInstances.get(i).stringValue(0))) sim_type=1;
 				if(testData.stringValue(1).equals(trainInstances.get(i).stringValue(0))) sim_style=1;
-				distance+=Math.pow(1-sim_type,2)+Math.pow(1-sim_style,2);
+				distance+=weights[0]*Math.pow(1-sim_type,2)+weights[1]*Math.pow(1-sim_style,2);
+				
+				for(int j: columns) { //For numeric attributes.
+					distance+= weights[j]*Math.pow(testData.value(j)-trainInstances.get(i).value(j), 2);
+				}
+				
 				distance=1/Math.pow(distance, 0.5);
 				map.put(i,distance);
 			}
@@ -73,19 +76,22 @@ public class Classify {
 		}
 	
 	public void setLabel(LinkedHashMap<Integer,Double> sortedMap, ArrayList<Instance> trainInstances, Instance testData) {
-	    double dis3=0;
+	    //double dis3=0;
 		HashMap<Integer,Double> list=new LinkedHashMap<Integer,Double>();
 		int index=0;
 		/*Get the top3 distance*/
 		for(Map.Entry<Integer, Double> entry: sortedMap.entrySet()) { 
+			/*
 			if(index==2) dis3=entry.getValue();
 			if(index>2) { //Judge whether the value(distance) is same with the 3rd one.
 				if(entry.getValue()!=dis3) break; 				
 			}
+			*/
+			if(index>2) break;
 			list.put(entry.getKey(),entry.getValue()); 
 			index++;
 		}
-		/* For each element in map list, find its label */
+		/* For each element in map list, find its label */ 
 		double[] labels=new double[5];
 		double max=0;
 		int indice=0;

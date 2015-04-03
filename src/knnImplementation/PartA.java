@@ -1,13 +1,14 @@
 package knnImplementation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import weka.core.Attribute;
 import weka.core.Instance;
 
-public class test {
+public class PartA {
 	public static void main (String[] args) {
 		List<ArrayList> trainList=new ArrayList<ArrayList>();
 		List<ArrayList> testList=new ArrayList<ArrayList>();
@@ -29,6 +30,7 @@ public class test {
 		
 		/*Get columns   */
 		columns=getData.getNormColumns(attributes);
+		//System.out.println(trainInstances.get(0).toString());
 		
 		/*Find the min and max value */
 		NormalizeData norm= new NormalizeData();
@@ -36,11 +38,10 @@ public class test {
 		double[] maxList=norm.findMax(trainInstances, testInstances, columns);
 		
 		/* Normalize the data */
-		for (int i=0;i<columns.size();i++) {
-			norm.normalization(minList, maxList, trainInstances, columns);
-			norm.normalization(minList, maxList, testInstances, columns);
-		}
+			trainInstances=norm.normalization(minList, maxList, trainInstances, columns);
+			testInstances=norm.normalization(minList, maxList, testInstances, columns);
 		//for(Instance inst:trainInstances ) System.out.println(inst);
+		
 		/* Calculate the distance and sorting*/
 		Classify classify=new Classify();
 		LinkedHashMap<Integer,Double> map;
@@ -51,5 +52,6 @@ public class test {
 			classify.setLabel(map, trainInstances, test);
 			System.out.println(test);
 		}
+			
 	}
 }

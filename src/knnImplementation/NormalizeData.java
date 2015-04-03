@@ -13,9 +13,11 @@ public class NormalizeData {
 		double val;
 		for(int i=0;i<normInstances.size();i++) {
 			val=(normInstances.get(i).value(col) - min) / denominator;
+			
+			//System.out.println("Original: "+normInstances.get(i));
+			
 			normInstances.get(i).setValue(col, val);
 		}
-		
 	}
 	
 	public ArrayList<Instance> normalization (double[] minList, double[] maxList, ArrayList<Instance> instanceList, List<Integer> columns) {
@@ -25,7 +27,8 @@ public class NormalizeData {
 		//int max=0;
 		
 		for(int i=0;i<columns.size();i++) { //For each column, normalize it.
-			normaliseHelper(minList[i], maxList[i], i, normInstances);
+			//System.out.println(columns.get(i));
+			normaliseHelper(minList[i], maxList[i], columns.get(i), normInstances);
 		}
 		
 		return normInstances;
